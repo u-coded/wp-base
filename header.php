@@ -48,6 +48,7 @@ if (is_404()) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="format-detection" content="telephone=no">
 
   <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/style.css?<?php echo filemtime(get_stylesheet_directory() . '/assets/css/style.css'); ?>">
 </head>

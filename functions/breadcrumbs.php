@@ -23,18 +23,18 @@ if (!function_exists('breadcrumbs')) {
     $home_url = get_page_link($home_id);
 
     // パンくずリストの開始: nav要素を追加し、aria-labelを指定
-    echo '<nav id="breadcrumb" aria-label="Breadcrumb">';
-    echo '<ul class="l-breadcrumb u-inner u-font-bold" role="list">'; // ulタグにrole="list"を追加
+    echo '<nav id="breadcrumb" class="l-breadcrumb u-inner u-font-bold" aria-label="Breadcrumb">';
+    echo '<ul role="list">'; // ulタグにrole="list"を追加
 
     // ホームリンクを表示
-    echo '<li class="l-breadcrumb__item" role="listitem">';
-    echo '<a href="' . esc_url(home_url('/')) . '" class="l-breadcrumb__txt u-alpha"><span class="l-breadcrumb__txt">ホーム</span></a>';
+    echo '<li role="listitem">';
+    echo '<a href="' . esc_url(home_url('/')) . '" class="u-alpha"><span>ホーム</span></a>';
     echo '</li>';
 
     if (is_attachment()) {
       // 添付ファイルページの場合
       $post_title = apply_filters('the_title', $wp_obj->post_title);
-      echo '<li class="l-breadcrumb__item" role="listitem"><span class="l-breadcrumb__txt u-alpha" aria-current="page">' . esc_html($post_title) . '</span></li>';
+      echo '<li role="listitem"><span class="u-alpha" aria-current="page">' . esc_html($post_title) . '</span></li>';
     } elseif (is_single()) {
       // 通常の投稿ページの場合
       $post_id    = $wp_obj->ID;
@@ -55,8 +55,8 @@ if (!function_exists('breadcrumbs')) {
         $post_type_link = esc_url(get_post_type_archive_link($post_type));
         $post_type_label = esc_html(get_post_type_object($post_type)->label);
 
-        echo '<li class="l-breadcrumb__item" role="listitem">';
-        echo '<a href="' . $post_type_link . '"  class="l-breadcrumb__txt u-alpha"><span>' . $post_type_label . '</span></a>';
+        echo '<li role="listitem">';
+        echo '<a href="' . $post_type_link . '"  class="u-alpha"><span>' . $post_type_label . '</span></a>';
         echo '</li>';
 
         $json_array[] = array(
@@ -65,11 +65,11 @@ if (!function_exists('breadcrumbs')) {
         );
       } else {
         // 通常の投稿の場合、投稿ページのリンクを追加
-        // echo '<li class="l-breadcrumb__item" role="listitem"><a href="' . $home_url . '" class="l-breadcrumb__txt u-alpha">' . esc_html(strip_tags($home_title)) . '</a></li>';
-        echo '<li class="l-breadcrumb__item" role="listitem"><a href="' . get_permalink(38) . '" class="l-breadcrumb__txt u-alpha">' . 'お知らせ・ブログ' . '</a></li>';
+        // echo '<li role="listitem"><a href="' . $home_url . '" class="u-alpha">' . esc_html(strip_tags($home_title)) . '</a></li>';
+        echo '<li role="listitem"><a href="' . get_permalink(38) . '" class="u-alpha">' . 'お知らせ・ブログ' . '</a></li>';
         $the_tax = 'category';
       }
-      echo '<li class="l-breadcrumb__item" role="listitem"><span aria-current="page"  class="l-breadcrumb__txt">' . esc_html(strip_tags($post_title)) . '</span></li>';
+      echo '<li role="listitem"><span aria-current="page"  >' . esc_html(strip_tags($post_title)) . '</span></li>';
     } elseif (is_page() || is_home()) {
       // 固定ページまたはホームの場合
       $page_id    = $wp_obj->ID;
@@ -81,7 +81,7 @@ if (!function_exists('breadcrumbs')) {
           if ($parent_id !== 10) { // ハゲーラキッズのトップを除外
             $parent_link = esc_url(get_permalink($parent_id));
             $parent_name = esc_html(get_the_title($parent_id));
-            echo '<li class="l-breadcrumb__item" role="listitem"><a href="' . $parent_link . '" class="l-breadcrumb__txt u-alpha"><span>' . $parent_name . '</span></a></li>';
+            echo '<li role="listitem"><a href="' . $parent_link . '" class="u-alpha"><span>' . $parent_name . '</span></a></li>';
 
             $json_array[] = array(
               'id' => $parent_link,
@@ -91,10 +91,10 @@ if (!function_exists('breadcrumbs')) {
         }
       }
 
-      echo '<li class="l-breadcrumb__item" role="listitem"><span aria-current="page" class="l-breadcrumb__txt">' . esc_html(strip_tags($page_title)) . '</span></li>';
+      echo '<li role="listitem"><span aria-current="page" >' . esc_html(strip_tags($page_title)) . '</span></li>';
     } elseif (is_post_type_archive()) {
       // 投稿タイプアーカイブページの場合
-      echo '<li class="l-breadcrumb__item" role="listitem"><span aria-current="page" class="l-breadcrumb__txt">' . esc_html($wp_obj->label) . '</span></li>';
+      echo '<li role="listitem"><span aria-current="page" >' . esc_html($wp_obj->label) . '</span></li>';
     } elseif (is_date()) {
       // 日付アーカイブの場合
       $year  = get_query_var('year');
@@ -102,18 +102,18 @@ if (!function_exists('breadcrumbs')) {
       $day   = get_query_var('day');
 
       if ($day !== 0) {
-        echo '<li class="l-breadcrumb__item" role="listitem"><a href="' . esc_url(get_year_link($year)) . '" class="l-breadcrumb__txt u-alpha"><span>' . esc_html($year) . '年</span></a></li>';
-        echo '<li class="l-breadcrumb__item" role="listitem"><a href="' . esc_url(get_month_link($year, $month)) . '" class="l-breadcrumb__txt u-alpha"><span>' . esc_html($month) . '月</span></a></li>';
-        echo '<li class="l-breadcrumb__item" role="listitem"><span aria-current="page" class="l-breadcrumb__txt">' . esc_html($day) . '日</span></li>';
+        echo '<li role="listitem"><a href="' . esc_url(get_year_link($year)) . '" class="u-alpha"><span>' . esc_html($year) . '年</span></a></li>';
+        echo '<li role="listitem"><a href="' . esc_url(get_month_link($year, $month)) . '" class="u-alpha"><span>' . esc_html($month) . '月</span></a></li>';
+        echo '<li role="listitem"><span aria-current="page" >' . esc_html($day) . '日</span></li>';
       } elseif ($month !== 0) {
-        echo '<li class="l-breadcrumb__item" role="listitem"><a href="' . $home_url . '" class="l-breadcrumb__txt u-alpha">' . esc_html(strip_tags($home_title)) . '</a></li>';
-        echo '<li class="l-breadcrumb__item" role="listitem"><span aria-current="page" class="l-breadcrumb__txt">' . esc_html($year) . '年' . esc_html($month) . '月</span></li>';
+        echo '<li role="listitem"><a href="' . $home_url . '" class="u-alpha">' . esc_html(strip_tags($home_title)) . '</a></li>';
+        echo '<li role="listitem"><span aria-current="page" >' . esc_html($year) . '年' . esc_html($month) . '月</span></li>';
       } else {
-        echo '<li class="l-breadcrumb__item" role="listitem"><span aria-current="page" class="l-breadcrumb__txt">' . esc_html($year) . '年</span></li>';
+        echo '<li role="listitem"><span aria-current="page" >' . esc_html($year) . '年</span></li>';
       }
     } elseif (is_author()) {
       // 投稿者アーカイブの場合
-      echo '<li class="l-breadcrumb__item" role="listitem"><span aria-current="page" class="l-breadcrumb__txt">' . esc_html($wp_obj->display_name) . ' の執筆記事</span></li>';
+      echo '<li role="listitem"><span aria-current="page" >' . esc_html($wp_obj->display_name) . ' の執筆記事</span></li>';
     } elseif (is_archive()) {
       // タームアーカイブの場合
       $term_id   = $wp_obj->term_id;
@@ -125,9 +125,9 @@ if (!function_exists('breadcrumbs')) {
       $post_type_label = esc_html(get_post_type_object($post_type)->label);
 
       if (is_tax()) {
-        echo '<li class="l-breadcrumb__item" role="listitem"><a href="' . $post_type_link . '" class="l-breadcrumb__txt u-alpha">' . $post_type_label . '</a></li>';
+        echo '<li role="listitem"><a href="' . $post_type_link . '" class="u-alpha">' . $post_type_label . '</a></li>';
       } else {
-        echo '<li class="l-breadcrumb__item" role="listitem"><a href="' . $home_url . '" class="l-breadcrumb__txt u-alpha">' . esc_html(strip_tags($home_title)) . '</a></li>';
+        echo '<li role="listitem"><a href="' . $home_url . '" class="u-alpha">' . esc_html(strip_tags($home_title)) . '</a></li>';
       }
 
       if ($wp_obj->parent !== 0) {
@@ -136,7 +136,7 @@ if (!function_exists('breadcrumbs')) {
           $parent_term = get_term($parent_id, $tax_name);
           $parent_link = esc_url(get_term_link($parent_id, $tax_name));
           $parent_name = esc_html($parent_term->name);
-          echo '<li class="l-breadcrumb__item" role="listitem"><a href="' . $parent_link . '" class="l-breadcrumb__txt u-alpha"><span>' . $parent_name . '</span></a></li>';
+          echo '<li role="listitem"><a href="' . $parent_link . '" class="u-alpha"><span>' . $parent_name . '</span></a></li>';
 
           $json_array[] = array(
             'id' => $parent_link,
@@ -145,16 +145,16 @@ if (!function_exists('breadcrumbs')) {
         }
       }
 
-      echo '<li class="l-breadcrumb__item" role="listitem"><span aria-current="page" class="l-breadcrumb__txt">' . esc_html($term_name) . '</span></li>';
+      echo '<li role="listitem"><span aria-current="page" >' . esc_html($term_name) . '</span></li>';
     } elseif (is_search()) {
       // 検索結果ページの場合
-      echo '<li class="l-breadcrumb__item" role="listitem"><span aria-current="page" class="l-breadcrumb__txt">「' . esc_html(get_search_query()) . '」で検索した結果</span></li>';
+      echo '<li role="listitem"><span aria-current="page" >「' . esc_html(get_search_query()) . '」で検索した結果</span></li>';
     } elseif (is_404()) {
       // 404ページの場合
-      echo '<li class="l-breadcrumb__item" role="listitem"><span aria-current="page" class="l-breadcrumb__txt">お探しの記事は見つかりませんでした。</span></li>';
+      echo '<li role="listitem"><span aria-current="page" >お探しの記事は見つかりませんでした。</span></li>';
     } else {
       // その他のページの場合
-      echo '<li class="l-breadcrumb__item" role="listitem"><span aria-current="page" class="l-breadcrumb__txt">' . esc_html(get_the_title()) . '</span></li>';
+      echo '<li role="listitem"><span aria-current="page" >' . esc_html(get_the_title()) . '</span></li>';
     }
 
     echo '</ul>'; // ulタグの閉じ
