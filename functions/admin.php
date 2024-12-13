@@ -6,39 +6,6 @@
 
 if (is_admin()) {
 
-	// ブロックエディタを無効化
-	// function hide_block_editor($hide_block_editor, $post_type) {
-	// 	if ($post_type === 'page') {
-	// 		return false;
-	// 	}
-	// 	return $hide_block_editor;
-	// }
-	// add_filter('use_block_editor_for_post_type', 'hide_block_editor', 10, 2);
-
-	// 固定ページでビジュアルエディターを非表示
-	// 参考 https://hirashimatakumi.com/blog/7514.html
-	// function disable_visual_editor_in_page() {
-	// 	global $typenow;
-	// 	if ($typenow == 'page') {
-	// 		add_filter('user_can_richedit', 'disable_visual_editor_filter');
-	// 	}
-	// }
-	// function disable_visual_editor_filter() {
-	// 	return false;
-	// }
-	// add_action('load-post.php', 'disable_visual_editor_in_page');
-	// add_action('load-post-new.php', 'disable_visual_editor_in_page');
-
-	// フロントページでエディタ非表示
-	// function home_hide_editor($home_hide_editor, $post) {
-	// 	if ($post->post_name === 'home') {
-	// 		remove_post_type_support('page', 'editor');
-	// 		return false;
-	// 	}
-	// 	return $home_hide_editor;
-	// }
-	// add_filter('use_block_editor_for_post', 'home_hide_editor', 10, 2);
-
 	// 「投稿」の名称を変更
 	add_action('admin_menu', 'change_post_menu_label');
 	function change_post_menu_label() {

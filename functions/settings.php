@@ -85,6 +85,27 @@ function is_parent_slug() {
 }
 
 /**
+ * get_previous_post()、get_next_post()をカスタム投稿にも対応させる
+ */
+add_filter('get_previous_post_where', function ($where) {
+  global $post;
+  $post_type = get_post_type($post); // 現在の投稿タイプを取得
+  if ($post_type) {
+    $where = str_replace("'post'", "'" . $post_type . "'", $where);
+  }
+  return $where;
+});
+
+add_filter('get_next_post_where', function ($where) {
+  global $post;
+  $post_type = get_post_type($post); // 現在の投稿タイプを取得
+  if ($post_type) {
+    $where = str_replace("'post'", "'" . $post_type . "'", $where);
+  }
+  return $where;
+});
+
+/**
  * ショートコード設定
  */
 function shortcode_template_parts($atts) {
