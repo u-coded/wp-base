@@ -18,6 +18,7 @@ function my_wp_kses_allowed_html($tags, $context) {
   $tags['source'] = array(
     'data-srcset' => true,
     'srcset' => true,
+    'src' => true,
   );
   $tags['use'] = array(
     'href' => true,
