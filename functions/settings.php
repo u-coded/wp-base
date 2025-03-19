@@ -129,3 +129,20 @@ function shortcode_theme_url() {
   return ob_get_clean();
 }
 add_shortcode('theme_url', 'shortcode_theme_url');
+
+
+/**
+ * REST API関連
+ */
+// アイキャッチ画像のURLを追加
+function add_featured_image_to_rest($data, $post, $context) {
+  if (has_post_thumbnail($post->ID)) {
+    $data->data['featured_image_url'] = get_the_post_thumbnail_url($post->ID, 'full');
+  } else {
+    $data->data['featured_image_url'] = null;
+  }
+  return $data;
+}
+
+// 投稿タイプ "post" にカスタムフィールドを追加
+add_filter('rest_prepare_post', 'add_featured_image_to_rest', 10, 3);
